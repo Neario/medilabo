@@ -1,0 +1,40 @@
+services:
+  medilabo-db:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - medilabo-db-data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  patient:
+    build: ./patient
+    environment:
+      DB_URL: jdbc:mysql://medilabo-db:3306/${MYSQL_DATABASE}
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+    depends_on:
+      medilabo-db:
+        condition: service_healthy
+    ports:
+      - "9090:9090"
+
+  adminer:
+    image: adminer
+    depends_on:
+      - medilabo-db
+    ports:
+      - "8081:8080"
+
+volumes:
+  medilabo-db-data:
