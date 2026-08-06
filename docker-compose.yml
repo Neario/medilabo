@@ -17,6 +17,15 @@ services:
       timeout: 5s
       retries: 10
 
+  gateway:
+    build: ./gateway
+    depends_on:
+      - patient
+    ports:
+      - "9090:9090"
+    environment:
+      GATEWAY_URI: http://patient:9091
+
   patient:
     build: ./patient
     environment:
@@ -27,7 +36,7 @@ services:
       medilabo-db:
         condition: service_healthy
     ports:
-      - "9090:9090"
+      - "9091:9091"
 
   adminer:
     image: adminer
