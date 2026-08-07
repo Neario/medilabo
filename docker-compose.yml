@@ -24,7 +24,7 @@ services:
     ports:
       - "9090:9090"
     environment:
-      GATEWAY_URI: http://patient:9091
+      GATEWAY_URI: ${PATIENT_URI}
 
   patient:
     build: ./patient
@@ -37,6 +37,15 @@ services:
         condition: service_healthy
     ports:
       - "9091:9091"
+
+  web:
+    build: ./web
+    environment:
+      GATEWAY_URL: ${GATEWAY_URI}
+    depends_on:
+      - gateway
+    ports:
+      - "9092:9092"
 
   adminer:
     image: adminer
