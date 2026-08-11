@@ -1,7 +1,6 @@
 package com.medilabo.patient.controller;
 
 import com.medilabo.patient.dto.PatientRequestDTO;
-import com.medilabo.patient.dto.PatientResponseDTO;
 import com.medilabo.patient.dto.mapper.PatientMapper;
 import com.medilabo.patient.model.Patient;
 import com.medilabo.patient.service.interfaces.PatientService;
@@ -25,27 +24,27 @@ public class PatientController {
     private final PatientMapper patientMapper;
 
     @GetMapping
-    public ResponseEntity<List<PatientResponseDTO>> getAllPatients() {
+    public ResponseEntity<List<Patient>> getAllPatients() {
         List<Patient> patients = patientService.findAll();
-        return ResponseEntity.ok().body(patientMapper.toResponseDTOList(patients));
+        return ResponseEntity.ok().body(patients);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PatientResponseDTO> getPatientById(@PathVariable Long id) {
+    public ResponseEntity<Patient> getPatientById(@PathVariable Long id) {
         Patient patient = patientService.getById(id);
-        return ResponseEntity.ok().body(patientMapper.toResponseDTO(patient));
+        return ResponseEntity.ok().body(patient);
     }
 
     @PostMapping
-    public ResponseEntity<PatientResponseDTO> createPatient(@Valid @RequestBody PatientRequestDTO patientRequestDTO) {
-        Patient patient = patientService.save(patientRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(patientMapper.toResponseDTO(patient));
+    public ResponseEntity<Patient> createPatient(@Valid @RequestBody PatientRequestDTO patientRequestDTO) {
+        Patient patient = patientService.save(patientMapper.toEntity(patientRequestDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(patient);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PatientResponseDTO> updatePatient(@PathVariable Long id, @Valid @RequestBody PatientRequestDTO patientRequestDTO) {
-        Patient patient = patientService.update(id,patientRequestDTO);
-        return ResponseEntity.ok().body(patientMapper.toResponseDTO(patient));
+    public ResponseEntity<Patient> updatePatient(@PathVariable Long id, @Valid @RequestBody PatientRequestDTO patientRequestDTO) {
+        Patient patient = patientService.update(id,patientMapper.toEntity(patientRequestDTO));
+        return ResponseEntity.ok().body(patient);
     }
 
     @DeleteMapping("/{id}")

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<nav th:fragment="navbar" class="navbar navbar-dark bg-primary">
+    <a class="navbar-brand" th:href="@{/patients}">Medilabo</a>
+    <div class="ms-auto">
+        <form th:if="${#authorization.expression('isAuthenticated()')}" th:action="@{/logout}" method="post" class="d-inline">
+            <button type="submit" class="btn btn-outline-light btn-sm">Déconnexion</button>
+        </form>
+    </div>
+</nav>
+</body>
+</html>

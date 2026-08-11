@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Authentification</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="card d-flex">
+            <div class="card-body mx-5">
+                <h5 class="mx-auto my-3 pt-1 pb-2 px-3">Authentification</h5>
+                <div class="form-login mt-5">
+                    <form th:action="@{/login}" method="post">
+                        <div th:if="${param.error}">
+                            <div class="alert alert-danger text-wrap" role="alert">Invalid username or password</div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="username" class="w-50">User :</label>
+                            <input id="username" type="text" name="username" placeholder="Username"/>
+                        </div>
+                        <div class="mb-4">
+                            <label for="password" class="w-50">Password :</label>
+                            <input id="password" type="password" name="password" placeholder="Mot de passe"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary d-block mx-auto my-5">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -16,8 +16,11 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
                 .requestMatchers("/css/**").permitAll()
                 .requestMatchers("/login").permitAll()
-                .anyRequest().permitAll()
-        ).formLogin(formLogin -> formLogin.loginPage("/login")
+                .requestMatchers("/patients/**").hasRole("ORGANIZER")
+                .anyRequest().authenticated()
+        ).formLogin(formLogin -> formLogin
+                .loginPage("/login")
+                .defaultSuccessUrl("/patients", true)
         ).logout(logout -> logout.logoutUrl("/logout"));
         return http.build();
     }

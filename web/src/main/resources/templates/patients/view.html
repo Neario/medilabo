@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="|Patient - ${patient.firstName}|"></title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
     <h1>Info Patient</h1>
     <table>
         <thead>

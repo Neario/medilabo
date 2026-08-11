@@ -1,8 +1,5 @@
 package com.medilabo.patient.service;
 
-
-import com.medilabo.patient.dto.PatientRequestDTO;
-import com.medilabo.patient.dto.mapper.PatientMapper;
 import com.medilabo.patient.exception.AlreadyExistException;
 import com.medilabo.patient.exception.NotFoundException;
 import com.medilabo.patient.model.Patient;
@@ -20,7 +17,6 @@ import java.util.Optional;
 public class PatientServiceImpl implements PatientService  {
 
     private final PatientRepository patientRepository;
-    private final PatientMapper patientMapper;
 
     @Override
     public Optional<Patient> findById(Long id) {
@@ -38,23 +34,22 @@ public class PatientServiceImpl implements PatientService  {
     }
 
     @Override
-    public Patient save(PatientRequestDTO patientRequestDTO) {
-        if (patientRepository.existsByFirstNameAndLastNameAndBirthDate(patientRequestDTO.firstName(),
-                patientRequestDTO.lastName(),
-                patientRequestDTO.birthDate())) {
+    public Patient save(Patient patient) {
+        if (patientRepository.existsByFirstNameAndLastNameAndBirthDate(patient.getFirstName(),
+                patient.getLastName(),
+                patient.getBirthDate())) {
             throw new AlreadyExistException(Patient.class.getSimpleName());
         }
-        Patient patient = patientMapper.toEntity(patientRequestDTO);
         return patientRepository.save(patient);
     }
 
     @Override
-    public Patient update(Long id, PatientRequestDTO patientRequestDTO) {
-         Patient patientUpdated =
-                patientRepository.findById(id).orElseThrow(() -> new NotFoundException(Patient.class.getSimpleName(),
-                        id));
-        patientUpdated = patientMapper.updateEntity(patientUpdated, patientRequestDTO);
-        return patientRepository.save(patientUpdated);
+    public Patient update(Long id, Patient patient) {
+        if (!patientRepository.existsById(id)) {
+            throw new NotFoundException(Patient.class.getSimpleName(), id);
+        }
+        patient.setId(id);
+        return patientRepository.save(patient);
     }
 
     @Override
