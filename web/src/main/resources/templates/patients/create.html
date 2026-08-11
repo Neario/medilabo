@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<div class="container mt-4">
+    <h1>Patient</h1>
+    <form th:action="@{${formAction}}" th:object="${patient}" method="post">
+        <div class="mb-3">
+            <label for="firstName">Prénom</label>
+            <input id="firstName" type="text" class="form-control" th:field="*{firstName}"
+                   th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+        </div>
+        <div class="mb-3">
+            <label for="lastName">Nom</label>
+            <input id="lastName" type="text" class="form-control" th:field="*{lastName}"
+                   th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+        </div>
+        <div class="mb-3">
+            <label for="birthDate">Date de naissance</label>
+            <input id="birthDate" type="date" class="form-control" th:field="*{birthDate}"
+                   th:classappend="${#fields.hasErrors('birthDate')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></div>
+        </div>
+        <div class="mb-3">
+            <label for="gender">Genre</label>
+            <select id="gender" class="form-control" th:field="*{gender}">
+                <option value="M">M</option>
+                <option value="F">F</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="phoneNumber">Téléphone</label>
+            <input id="phoneNumber" type="text" class="form-control" th:field="*{phoneNumber}">
+        </div>
+        <div class="mb-3">
+            <label for="address">Adresse</label>
+            <input id="address" type="text" class="form-control" th:field="*{address}">
+        </div>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </form>
+</div>
+</body>
+</html>
