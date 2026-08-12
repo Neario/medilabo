@@ -30,7 +30,10 @@
                 <td th:text="${patient.gender}"></td>
                 <td th:text="${patient.phoneNumber}"></td>
                 <td th:text="${patient.address}"></td>
-                <td><a th:href="@{/patients/{id}/edit(id=${patient.id})}" class="btn btn-sm btn-outline-secondary">
+                <td>
+                    <a th:href="@{/patients/{id}(id=${patient.id})}" class="btn btn-sm btn-outline-secondary">
+                        <i class="bi bi-eye"></i>
+                    <a th:href="@{/patients/{id}/edit(id=${patient.id})}" class="btn btn-sm btn-outline-secondary">
                     <i class="bi bi-pencil"></i>
                 </a></td>
             </tr>

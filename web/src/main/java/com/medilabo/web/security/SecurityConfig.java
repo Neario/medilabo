@@ -2,6 +2,7 @@ package com.medilabo.web.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,10 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
                 .requestMatchers("/css/**").permitAll()
                 .requestMatchers("/login").permitAll()
+                .requestMatchers(HttpMethod.GET, "/patients").hasAnyRole("ORGANIZER", "PRACTITIONER")
+                .requestMatchers("/patients/create").hasRole("ORGANIZER")
+                .requestMatchers("/patients/{id}/edit").hasRole("ORGANIZER")
+                .requestMatchers(HttpMethod.GET, "/patients/{id}").hasAnyRole("ORGANIZER", "PRACTITIONER")
                 .requestMatchers("/patients/**").hasRole("ORGANIZER")
                 .anyRequest().authenticated()
         ).formLogin(formLogin -> formLogin
