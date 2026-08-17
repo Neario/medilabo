@@ -1,6 +1,6 @@
-package com.medilabo.web.model;
+package com.medilabo.auth.model;
 
-import com.medilabo.web.model.enumerations.Role;
+import com.medilabo.auth.model.enumerations.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 

@@ -1,7 +1,7 @@
-package com.medilabo.web.security;
+package com.medilabo.auth.security;
 
-import com.medilabo.web.model.User;
-import com.medilabo.web.repository.UserRepository;
+import com.medilabo.auth.model.User;
+import com.medilabo.auth.repository.UserRepository;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

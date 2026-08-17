@@ -1,4 +1,4 @@
-package com.medilabo.web.model.enumerations;
+package com.medilabo.auth.model.enumerations;
 
 public enum Role {
     ORGANIZER("organizer"),

@@ -1,6 +1,6 @@
-package com.medilabo.web.security;
+package com.medilabo.auth.security;
 
-import com.medilabo.web.model.User;
+import com.medilabo.auth.model.User;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
