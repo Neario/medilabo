@@ -4,6 +4,15 @@ import com.medilabo.notes.model.Note;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+
+/**
+ * Validated payload for NoteRequest
+ * <p>
+ *
+ * @param patId patient id
+ * @param patient patient's name
+ * @param note medical information
+ */
 public record NoteRequestDTO(
         @NotNull(message = "patId must not be null")
         Long patId,
