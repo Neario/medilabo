@@ -7,6 +7,9 @@ import lombok.Data;
 
 import java.time.LocalDate;
 
+/**
+ * Entity Patient
+ */
 @Entity
 @Data
 public class Patient {

@@ -1,6 +1,7 @@
 package com.medilabo.web.config;
 
 import com.medilabo.web.client.AuthClient;
+import com.medilabo.web.client.NoteGatewayClient;
 import com.medilabo.web.client.PatientGatewayClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,11 +20,6 @@ public class RestClientConfig {
     }
 
     @Bean
-    public RestClient authRestClient(@Value("${auth.url}") String authUrl) {
-        return RestClient.create(authUrl);
-    }
-
-    @Bean
     public PatientGatewayClient patientGatewayClient(@Qualifier("gatewayRestClient") RestClient restClient) {
         RestClientAdapter adapter = RestClientAdapter.create(restClient);
         HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
@@ -31,7 +27,14 @@ public class RestClientConfig {
     }
 
     @Bean
-    public AuthClient authClient(@Qualifier("authRestClient") RestClient restClient) {
+    public NoteGatewayClient noteGatewayClient(@Qualifier("gatewayRestClient") RestClient restClient) {
+        RestClientAdapter adapter = RestClientAdapter.create(restClient);
+        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
+        return factory.createClient(NoteGatewayClient.class);
+    }
+
+    @Bean
+    public AuthClient authClient(@Qualifier("gatewayRestClient") RestClient restClient) {
         RestClientAdapter adapter = RestClientAdapter.create(restClient);
         HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
         return factory.createClient(AuthClient.class);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title th:text="|Patient - ${patient.firstName}|"></title>
@@ -30,5 +30,13 @@
         </tr>
         </tbody>
     </table>
+
+    <h2>Historique</h2>
+    <div sec:authorize="hasRole('PRACTITIONER')">
+        <a th:href="@{/patients/{id}/notes/new(id=${patient.id})}" class="btn btn-primary">Ajouter une note</a>
+    </div>
+
+    <div th:each="note : ${notes}" style="white-space: pre-wrap;" th:text="${note.note}"></div>
+
 </body>
 </html>

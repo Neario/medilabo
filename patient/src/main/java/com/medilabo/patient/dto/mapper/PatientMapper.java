@@ -5,9 +5,18 @@ import com.medilabo.patient.model.Patient;
 import org.springframework.stereotype.Component;
 
 
+/**
+ * Converts data between {@link PatientRequestDTO} and {@link Patient}
+ */
 @Component
 public class PatientMapper {
 
+    /**
+     * Get a new {@link Patient} from a patientRequestDTO.
+     *
+     * @param patientRequestDTO validated request payload
+     * @return a new {@code Patient} for patient creation
+     */
     public Patient toEntity(PatientRequestDTO  patientRequestDTO) {
         Patient patient = new Patient();
         return getPatient(patient, patientRequestDTO);

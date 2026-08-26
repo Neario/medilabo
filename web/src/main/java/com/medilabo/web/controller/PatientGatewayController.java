@@ -1,5 +1,7 @@
 package com.medilabo.web.controller;
 
+import com.medilabo.web.client.NoteGatewayClient;
+import com.medilabo.web.dto.NoteRequestDTO;
 import com.medilabo.web.dto.PatientRequestDTO;
 import com.medilabo.web.service.PatientGatewayService;
 import jakarta.validation.Valid;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class PatientGatewayController {
 
     private final PatientGatewayService patientGatewayService;
+    private final NoteGatewayClient noteGatewayClient;
 
     @GetMapping("/patients")
     public String patients(Model model) {
@@ -25,6 +28,7 @@ public class PatientGatewayController {
     @GetMapping("/patients/{id}")
     public String patient(@PathVariable Long id, Model model) {
         model.addAttribute("patient", patientGatewayService.getPatientById(id));
+        model.addAttribute("notes", noteGatewayClient.getNotes(id));
         return "patients/view";
     }
 
@@ -73,5 +77,17 @@ public class PatientGatewayController {
             model.addAttribute("error", e.getMessage());
             return "patients/create";
         }
+    }
+
+    @GetMapping("/patients/{id}/notes/new")
+    public String newNoteForm(@PathVariable Long id, Model model) {
+        model.addAttribute("patient", patientGatewayService.getPatientById(id));
+        return "notes/create";
+    }
+
+    @PostMapping("/patients/{id}/notes")
+    public String addNote(@PathVariable Long id, @RequestParam String patient, @RequestParam String note) {
+        noteGatewayClient.createNote(new NoteRequestDTO(id, patient, note));
+        return "redirect:/patients/"+id;
     }
 }

@@ -21,6 +21,9 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.POST, "/patients").hasRole("ORGANIZER")
                         .pathMatchers(HttpMethod.PUT, "/patients/**").hasRole("ORGANIZER")
                         .pathMatchers(HttpMethod.DELETE, "/patients/**").hasRole("ORGANIZER")
+                        .pathMatchers(HttpMethod.GET, "/notes/**").hasAnyRole("ORGANIZER", "PRACTITIONER")
+                        .pathMatchers(HttpMethod.POST, "/notes/**").hasRole("PRACTITIONER")
+                        .pathMatchers("/auth/**").permitAll()
                         .anyExchange().authenticated()
                 )
                 .addFilterAt(jwtWebFilter, SecurityWebFiltersOrder.AUTHENTICATION);

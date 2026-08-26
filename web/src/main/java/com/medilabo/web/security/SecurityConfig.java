@@ -28,6 +28,8 @@ public class SecurityConfig {
                 .requestMatchers("/patients/create").hasRole("ORGANIZER")
                 .requestMatchers("/patients/{id}/edit").hasRole("ORGANIZER")
                 .requestMatchers(HttpMethod.GET, "/patients/{id}").hasAnyRole("ORGANIZER", "PRACTITIONER")
+                .requestMatchers("/patients/{id}/notes/new").hasRole("PRACTITIONER")
+                .requestMatchers("/patients/{id}/notes").hasRole("PRACTITIONER")
                 .requestMatchers("/patients/**").hasRole("ORGANIZER")
                 .anyRequest().authenticated())
                 .addFilterBefore(jwtCookieAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

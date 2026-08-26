@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Nouvelle note</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<div class="container mt-4">
+    <h1 th:text="|Nouvelle note - ${patient.firstName} ${patient.lastName}|"></h1>
+    <form th:action="@{/patients/{id}/notes(id=${patient.id})}" method="post">
+        <input type="hidden" name="patient" th:value="${patient.firstName + ' ' + patient.lastName}">
+        <div class="mb-3">
+            <textarea name="note" rows="6" class="form-control" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </form>
+</div>
+</body>
+</html>

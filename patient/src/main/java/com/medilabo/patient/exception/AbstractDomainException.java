@@ -3,6 +3,10 @@ package com.medilabo.patient.exception;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+/**
+ * Generic class for HTTP errors
+ * Every exception supplies message and httpStatus
+ */
 @Getter
 public class AbstractDomainException extends RuntimeException{
 
