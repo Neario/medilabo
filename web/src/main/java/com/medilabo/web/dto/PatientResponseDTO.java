@@ -5,6 +5,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
+/**
+ * Patient data
+ *
+ * @param id patient's identifier
+ * @param firstName patient's firstname
+ * @param lastName patient's lastname
+ * @param birthDate patient's birthdate
+ * @param gender patient's gender
+ * @param phoneNumber patient's phone number
+ * @param address patient's address
+ */
 public record PatientResponseDTO(
         Long id,
         String firstName,

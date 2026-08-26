@@ -12,6 +12,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Security config for web page with {@link JwtCookieAuthenticationFilter}
+ * access rules bases on role
+ */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -19,6 +23,11 @@ public class SecurityConfig {
 
     private final JwtCookieAuthenticationFilter jwtCookieAuthenticationFilter;
 
+    /**
+     * Defines the URL authorization rules     *
+     * @param http the security configuration builder
+     * @return the built filter chain
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
@@ -38,6 +47,10 @@ public class SecurityConfig {
                         exceptionHandling.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")));
         return http.build();
     }
+
+    /**
+     * @return the password encoder
+     */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

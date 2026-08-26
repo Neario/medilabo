@@ -9,12 +9,16 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 
+/**
+ * {@link LoginService} implementation
+ */
 @Service
 @RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
 
     private final AuthClient authClient;
 
+    /** {@inheritDoc} */
     @Override
     public String login(LoginRequestDTO loginRequestDTO) {
         LoginResponseDTO loginResponse = authClient.login(loginRequestDTO);

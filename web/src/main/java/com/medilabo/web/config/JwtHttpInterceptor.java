@@ -11,7 +11,20 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.IOException;
 
+/**
+ * HTTP interceptor for add Token JWT in Header cookie for Gateway
+ * {@code Authorization: Bearer}
+ */
 public class JwtHttpInterceptor implements ClientHttpRequestInterceptor {
+
+    /**
+     * Adds the {@code Authorization} header, if a cookie is present on current request.
+     *
+     * @param request the outgoing request to the gateway
+     * @param body the outgoing request body
+     * @param execution the remaining execution chain
+     * @return the response from the gateway
+     */
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

@@ -20,6 +20,10 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+/**
+ * Filter for spring security
+ * Verify if have token , if is valid , and verify role and identifier for page access
+ */
 @Component
 public class JwtCookieAuthenticationFilter extends OncePerRequestFilter {
 
@@ -29,6 +33,14 @@ public class JwtCookieAuthenticationFilter extends OncePerRequestFilter {
         this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
+    /**
+     * Reads the cookie, if JWT TOKEN is present and valid, and sets the
+     * resulting UsernamePasswordAuthenticationToken for spring security
+     *
+     * @param request the incoming request
+     * @param response the outgoing response
+     * @param filterChain the remaining filter chain
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = extractTokenFromCookie(request);
@@ -42,7 +54,7 @@ public class JwtCookieAuthenticationFilter extends OncePerRequestFilter {
                 String identifier = claims.get("identifier", String.class);
                 String role = claims.get("role", String.class);
 
-                var authentication = new UsernamePasswordAuthenticationToken(
+                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         identifier, null, List.of(new SimpleGrantedAuthority("ROLE_" + role)));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception e) {

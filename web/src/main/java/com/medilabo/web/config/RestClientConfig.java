@@ -11,14 +11,34 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
+/**
+ * {@link RestClient} config pointed at the Gateway with resource factories :
+ * {@link PatientGatewayClient},
+ * {@link NoteGatewayClient},
+ * {@link AuthClient}
+ */
 @Configuration
 public class RestClientConfig {
 
+    /**
+     * {@link RestClient} used by every gateway client with {@link JwtHttpInterceptor} for add JWT TOKEN in cookie
+     *
+     * @param gatewayUrl base URL of the Gateway
+     * @return the configured client
+     */
     @Bean
     public RestClient gatewayRestClient(@Value("${gateway.url}") String gatewayUrl) {
-        return RestClient.builder().baseUrl(gatewayUrl).requestInterceptors(interceptor -> interceptor.add(new JwtHttpInterceptor())).build();
+        return RestClient.builder()
+                .baseUrl(gatewayUrl)
+                .requestInterceptors(interceptor ->
+                        interceptor.add(new JwtHttpInterceptor()))
+                .build();
     }
 
+    /**
+     * @param restClient config {@link RestClient}
+     * @return resource {@link PatientGatewayClient}
+     */
     @Bean
     public PatientGatewayClient patientGatewayClient(@Qualifier("gatewayRestClient") RestClient restClient) {
         RestClientAdapter adapter = RestClientAdapter.create(restClient);
@@ -26,6 +46,10 @@ public class RestClientConfig {
         return factory.createClient(PatientGatewayClient.class);
     }
 
+    /**
+     * @param restClient config {@link RestClient}
+     * @return resource {@link NoteGatewayClient}
+     */
     @Bean
     public NoteGatewayClient noteGatewayClient(@Qualifier("gatewayRestClient") RestClient restClient) {
         RestClientAdapter adapter = RestClientAdapter.create(restClient);
@@ -33,6 +57,10 @@ public class RestClientConfig {
         return factory.createClient(NoteGatewayClient.class);
     }
 
+    /**
+     * @param restClient config {@link RestClient}
+     * @return resource {@link AuthClient}
+     */
     @Bean
     public AuthClient authClient(@Qualifier("gatewayRestClient") RestClient restClient) {
         RestClientAdapter adapter = RestClientAdapter.create(restClient);

@@ -9,10 +9,26 @@ import org.springframework.web.service.annotation.PostExchange;
 
 import java.util.List;
 
+/**
+ * HTTP client for the {@code notes} endpoints
+ */
 public interface NoteGatewayClient {
+
+    /**
+     * List of all notes for a patient.
+     *
+     * @param patId identifier patient
+     * @return all notes for this patient
+     */
     @GetExchange("/notes/{patId}")
     List<NoteResponseDTO> getNotes(@PathVariable Long patId);
 
+    /**
+     * Creates a new note.
+     *
+     * @param noteRequestDTO the note to create
+     * @return the created note
+     */
     @PostExchange("/notes/new")
     NoteResponseDTO createNote(@RequestBody NoteRequestDTO noteRequestDTO);
 

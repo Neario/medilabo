@@ -5,11 +5,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * Centralised translation of {@link AbstractDomainException} subclasses into
- * HTTP error responses, applied across every controller in this service.
- */
-
-/**
  * Handle HTTP exception , centralizes controller errors and applies a response based on the returned exception.
  */
 @RestControllerAdvice

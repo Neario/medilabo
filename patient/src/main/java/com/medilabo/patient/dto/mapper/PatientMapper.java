@@ -22,6 +22,15 @@ public class PatientMapper {
         return getPatient(patient, patientRequestDTO);
     }
 
+    /**
+     * Applies a patientRequestDTO's data onto an existing {@link Patient}.
+     * <p>
+     * Full-replacement: every field is overwritten, the entity's {@code id} is untouched.
+     *
+     * @param patient the existing patient to update
+     * @param patientRequestDTO validated request payload
+     * @return the same {@code patient} instance, updated
+     */
     public Patient updateEntity(Patient patient, PatientRequestDTO patientRequestDTO) {
         return getPatient(patient, patientRequestDTO);
     }
