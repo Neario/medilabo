@@ -13,6 +13,9 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
 
+/**
+ * Generate JWT TOKEN HS256, signed with the secret shared across {@code auth}, {@code web} and {@code gateway}
+ */
 @Service
 public class JwtService {
 
@@ -23,7 +26,12 @@ public class JwtService {
         return Keys.hmacShaKeyFor(jwtSecretKey.getBytes(StandardCharsets.UTF_8));
     }
 
-
+    /**
+     * Generate a signed JWT for an authenticated user with {@code identifier}, {@code role} and expiration after one hour
+     *
+     * @param user the authenticated user
+     * @return the signed, compact JWT
+     */
     public String generateAccessToken(User user) {
         return Jwts
                 .builder()
@@ -36,6 +44,10 @@ public class JwtService {
                 .compact();
     }
 
+    /**
+     * @param token a signed JWT
+     * @return the user id in the token's subject
+     */
     public Long getUserIdFromToken(String token) {
         Claims claims = Jwts.parser()
                 .verifyWith(getSecretKey())
@@ -46,6 +58,10 @@ public class JwtService {
         return Long.valueOf(claims.getSubject());
     }
 
+    /**
+     * @param token a signed JWT
+     * @return the token's expiration instant
+     */
     public Instant getExpirationDateFromToken(String token) {
         Claims claims = Jwts.parser()
                 .verifyWith(getSecretKey())
@@ -55,6 +71,11 @@ public class JwtService {
         return claims.getExpiration().toInstant();
     }
 
+    /**
+     * @param token a signed JWT
+     * @param user the user of the token
+     * @return {@code true} if the token is not expired
+     */
     public boolean isTokenValid(String token, User user) {
         final Long id =  getUserIdFromToken(token);
         return (id.equals(user.getId()) && !isTokenExpired(token));

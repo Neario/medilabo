@@ -3,7 +3,7 @@ package com.medilabo.patient.exception;
 import org.springframework.http.HttpStatus;
 
 /**
- * throw AlreadyExistException with {@code 409 Conflict}
+ * Throw AlreadyExistException with {@code 409 Conflict}
  */
 public class AlreadyExistException extends AbstractDomainException{
 

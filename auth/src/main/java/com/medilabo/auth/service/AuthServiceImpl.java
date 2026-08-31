@@ -12,6 +12,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * {@link AuthService} implementation.
+ * <p>
+ * Delegates credential verification to Spring Security's
+ * {@link AuthenticationManager} (backed by {@code CustomUserDetailsService}),
+ * then issues a JWT via {@link JwtService} on success.
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
@@ -20,6 +27,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
 
+    /** {@inheritDoc} */
     @Override
     public String login(String identifier, String password) {
         try {

@@ -11,10 +11,17 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Security config for Auth stateless
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+    /**
+     * @param http the security configuration builder
+     * @return the built filter chain
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
@@ -25,11 +32,21 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * @return the password encoder used to verify with user passwords
+     */
     @Bean
     BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Exposes Spring Security's {@link AuthenticationManager}
+     * verify credentials against with {@link CustomUserDetailsService} and {@link com.medilabo.auth.service.AuthServiceImpl}.
+     *
+     * @param config the authentication configuration built by Spring Security
+     * @return the application's authentication manager
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();

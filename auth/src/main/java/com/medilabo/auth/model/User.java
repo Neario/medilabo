@@ -4,6 +4,9 @@ import com.medilabo.auth.model.enumerations.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 
+/**
+ * Entity User
+ */
 @Entity
 @Data
 @Table(name = "app_user")
