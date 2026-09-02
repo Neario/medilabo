@@ -7,6 +7,7 @@
 </head>
 <body>
 <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<section>
     <h1>Info Patient</h1>
     <table>
         <thead>
@@ -30,13 +31,23 @@
         </tr>
         </tbody>
     </table>
+</section>
 
+<section>
     <h2>Historique</h2>
     <div sec:authorize="hasRole('PRACTITIONER')">
         <a th:href="@{/patients/{id}/notes/new(id=${patient.id})}" class="btn btn-primary">Ajouter une note</a>
     </div>
 
     <div th:each="note : ${notes}" style="white-space: pre-wrap;" th:text="${note.note}"></div>
+
+</section>
+
+<section>
+    <h2>Risque</h2>
+    <div style="white-space: pre-wrap;" th:text="${risk.level}"></div>
+</section>
+
 
 </body>
 </html>

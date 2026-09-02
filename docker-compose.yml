@@ -64,6 +64,7 @@ services:
       GATEWAY_URI: ${PATIENT_URI}
       NOTES_URI: http://notes:9094
       AUTH_URI: http://auth:9093
+      RISK_URI: http://risk:9095
       JWT_SECRET: ${JWT_SECRET}
 
   patient:
@@ -111,6 +112,16 @@ services:
         condition: service_healthy
     ports:
       - "9094:9094"
+  risk:
+    build: ./risk
+    environment:
+      GATEWAY_URL: ${GATEWAY_URI}
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      gateway:
+        condition: service_started
+    ports:
+      - "9095:9095"
 
   adminer:
     image: adminer

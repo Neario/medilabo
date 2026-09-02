@@ -1,6 +1,7 @@
 package com.medilabo.web.controller;
 
 import com.medilabo.web.client.NoteGatewayClient;
+import com.medilabo.web.client.RiskGatewayClient;
 import com.medilabo.web.dto.NoteRequestDTO;
 import com.medilabo.web.dto.PatientRequestDTO;
 import com.medilabo.web.service.PatientGatewayService;
@@ -20,6 +21,7 @@ public class PatientGatewayController {
 
     private final PatientGatewayService patientGatewayService;
     private final NoteGatewayClient noteGatewayClient;
+    private final RiskGatewayClient riskGatewayClient;
 
     /**
      * Render patient list page
@@ -43,6 +45,7 @@ public class PatientGatewayController {
     public String patient(@PathVariable Long id, Model model) {
         model.addAttribute("patient", patientGatewayService.getPatientById(id));
         model.addAttribute("notes", noteGatewayClient.getNotes(id));
+        model.addAttribute("risk", riskGatewayClient.getRisk(id));
         return "patients/view";
     }
 

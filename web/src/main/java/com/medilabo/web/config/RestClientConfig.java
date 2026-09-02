@@ -3,6 +3,7 @@ package com.medilabo.web.config;
 import com.medilabo.web.client.AuthClient;
 import com.medilabo.web.client.NoteGatewayClient;
 import com.medilabo.web.client.PatientGatewayClient;
+import com.medilabo.web.client.RiskGatewayClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -66,5 +67,16 @@ public class RestClientConfig {
         RestClientAdapter adapter = RestClientAdapter.create(restClient);
         HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
         return factory.createClient(AuthClient.class);
+    }
+
+    /**
+     * @param restClient config {@link RestClient}
+     * @return resource {@link RiskGatewayClient}
+     */
+    @Bean
+    public RiskGatewayClient riskGatewayClient(@Qualifier("gatewayRestClient") RestClient restClient) {
+        RestClientAdapter adapter = RestClientAdapter.create(restClient);
+        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
+        return factory.createClient(RiskGatewayClient.class);
     }
 }
