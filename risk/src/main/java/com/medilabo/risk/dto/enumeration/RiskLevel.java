@@ -2,13 +2,13 @@ package com.medilabo.risk.dto.enumeration;
 
 import lombok.Getter;
 
+/**
+ * A patient's diabetes risk level
+ */
 @Getter
 public enum RiskLevel {
-    NONE("Aucun risque"),
-    BORDERLINE("Risque limité"),
-    IN_DANGER("Danger"),
-    EARLY_ONSET("Apparition précoce");
-
-    private final String label;
-    RiskLevel(String label) { this.label = label; }
+    NONE,
+    BORDERLINE,
+    IN_DANGER,
+    EARLY_ONSET
 }

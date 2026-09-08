@@ -17,6 +17,9 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * {@link RiskService} implementation
+ */
 @Service
 @RequiredArgsConstructor
 public class RiskServiceImpl implements RiskService {
@@ -38,6 +41,7 @@ public class RiskServiceImpl implements RiskService {
     private final PatientClient patientClient;
     private final NoteClient noteClient;
 
+    /** {@inheritDoc} */
     @Override
     public RiskLevel diabetesRisk(Long patId) {
         PatientResponseDTO patientResponseDTO = patientClient.getPatient(patId);
@@ -50,6 +54,15 @@ public class RiskServiceImpl implements RiskService {
         return getRiskLevel(age, patientGender, triggers);
     }
 
+    /**
+     * Counts trigger terms across a patient's notes
+     * <p>
+     * For each note, counts how many distinct {@link #TRIGGER_TERMS} it
+     * contains and then sums that count across every note.
+     *
+     * @param notes the patient's notes
+     * @return the total trigger count
+     */
     private int triggers(List<NoteResponseDTO> notes) {
         return notes.stream()
                 .filter(Objects::nonNull)
@@ -66,6 +79,14 @@ public class RiskServiceImpl implements RiskService {
     }
 
 
+    /**
+     * Logic for diabetes risk level depending on age , gender , triggers
+     *
+     * @param age the patient's age in years
+     * @param gender the patient's gender
+     * @param triggers the total trigger count
+     * @return {@link RiskLevel} depending on age , gender , triggers
+     */
     private RiskLevel getRiskLevel(int age, Gender gender, int triggers) {
         if (triggers == 0) {
             return RiskLevel.NONE;

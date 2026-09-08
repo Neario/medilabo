@@ -1,5 +1,8 @@
 package com.medilabo.risk.dto.enumeration;
 
+/**
+ * Patient gender
+ */
 public enum Gender {
     M("M"),
     F("F");
