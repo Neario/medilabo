@@ -57,31 +57,4 @@ public class JwtService {
 
         return Long.valueOf(claims.getSubject());
     }
-
-    /**
-     * @param token a signed JWT
-     * @return the token's expiration instant
-     */
-    public Instant getExpirationDateFromToken(String token) {
-        Claims claims = Jwts.parser()
-                .verifyWith(getSecretKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
-        return claims.getExpiration().toInstant();
-    }
-
-    /**
-     * @param token a signed JWT
-     * @param user the user of the token
-     * @return {@code true} if the token is not expired
-     */
-    public boolean isTokenValid(String token, User user) {
-        final Long id =  getUserIdFromToken(token);
-        return (id.equals(user.getId()) && !isTokenExpired(token));
-    }
-
-    private boolean isTokenExpired(String token) {
-        return getExpirationDateFromToken(token).isBefore(Instant.now());
-    }
 }
