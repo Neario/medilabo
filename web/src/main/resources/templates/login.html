@@ -5,28 +5,36 @@
     <title>Authentification</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
-<body>
+<body class="bg-light">
 <div class="container">
-    <div class="d-flex justify-content-center align-items-center vh-100">
-        <div class="card d-flex">
-            <div class="card-body mx-5">
-                <h5 class="mx-auto my-3 pt-1 pb-2 px-3">Authentification</h5>
-                <div class="form-login mt-5">
-                    <form th:action="@{/login}" method="post">
-                        <div th:if="${error}">
-                            <div class="alert alert-danger text-wrap" role="alert">Invalid username or password</div>
-                        </div>
-                        <div class="mb-4">
-                            <label for="identifier" class="w-50">User :</label>
-                            <input id="identifier" type="text" name="identifier" placeholder="identifier"/>
-                        </div>
-                        <div class="mb-4">
-                            <label for="password" class="w-50">Password :</label>
-                            <input id="password" type="password" name="password" placeholder="Mot de passe"/>
-                        </div>
-                        <button type="submit" class="btn btn-primary d-block mx-auto my-5">Login</button>
-                    </form>
+    <div class="d-flex flex-column justify-content-center align-items-center vh-100">
+        <div class="text-center mb-4">
+            <svg width="64" height="64" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 84 C18 62, 6 42, 6 26 C6 12, 18 4, 30 8 C39 11, 46 18, 50 27 C54 18, 61 11, 70 8 C82 4, 94 12, 94 26 C94 42, 82 62, 50 84 Z" fill="#e63329"/>
+                <rect x="43" y="30" width="14" height="34" rx="2" fill="#ffffff"/>
+                <rect x="33" y="40" width="34" height="14" rx="2" fill="#ffffff"/>
+            </svg>
+            <div class="mt-2" style="font-size:1.5rem; color:#e63329;">
+                <strong>MédiLabo</strong> Solutions
+            </div>
+        </div>
+        <div class="card border-primary" style="max-width: 400px; width: 100%;">
+            <div class="card-body p-4">
+                <h5 class="text-center mb-4">Authentification</h5>
+                <div th:if="${error}" class="alert alert-danger text-center" role="alert">
+                    Identifiant ou mot de passe invalide
                 </div>
+                <form th:action="@{/login}" method="post">
+                    <div class="form-group">
+                        <label for="identifier">Identifiant</label>
+                        <input id="identifier" type="text" name="identifier" class="form-control" placeholder="Identifiant" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input id="password" type="password" name="password" class="form-control" placeholder="Mot de passe" required/>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mt-4">Se connecter</button>
+                </form>
             </div>
         </div>
     </div>

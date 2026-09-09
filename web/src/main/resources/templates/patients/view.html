@@ -5,49 +5,68 @@
     <title th:text="|Patient - ${patient.firstName}|"></title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
-<body>
+<body class="bg-light">
 <nav th:replace="~{fragments/navbar :: navbar}"></nav>
-<section>
-    <h1>Info Patient</h1>
-    <table>
-        <thead>
-        <tr>
-            <th>FirstName</th>
-            <th>LastName</th>
-            <th>BirthDate</th>
-            <th>Gender</th>
-            <th>PhoneNumber</th>
-            <th>Address</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td th:text="${patient.firstName}"></td>
-            <td th:text="${patient.lastName}"></td>
-            <td th:text="${patient.birthDate}"></td>
-            <td th:text="${patient.gender}"></td>
-            <td th:text="${patient.phoneNumber}"></td>
-            <td th:text="${patient.address}"></td>
-        </tr>
-        </tbody>
-    </table>
-</section>
+<div class="container mt-4">
 
-<section>
-    <h2>Historique</h2>
-    <div sec:authorize="hasRole('PRACTITIONER')">
-        <a th:href="@{/patients/{id}/notes/new(id=${patient.id})}" class="btn btn-primary">Ajouter une note</a>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Info Patient</h4>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <div class="text-muted small">FirstName</div>
+                    <div th:text="${patient.firstName}"></div>
+                </div>
+                <div class="col-6">
+                    <div class="text-muted small">LastName</div>
+                    <div th:text="${patient.lastName}"></div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <div class="text-muted small">BirthDate</div>
+                    <div th:text="${patient.birthDate}"></div>
+                </div>
+                <div class="col-6">
+                    <div class="text-muted small">Gender</div>
+                    <div th:text="${patient.gender}"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="text-muted small">PhoneNumber</div>
+                    <div th:text="${patient.phoneNumber}"></div>
+                </div>
+                <div class="col-6">
+                    <div class="text-muted small">Address</div>
+                    <div th:text="${patient.address}"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div th:each="note : ${notes}" style="white-space: pre-wrap;" th:text="${note.note}"></div>
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Historique</h4>
+                <div sec:authorize="hasRole('PRACTITIONER')">
+                    <a th:href="@{/patients/{id}/notes/new(id=${patient.id})}" class="btn btn-primary">Ajouter une note</a>
+                </div>
+            </div>
+            <div th:each="note, noteStat : ${notes}" th:classappend="${!noteStat.last} ? 'pb-2 mb-2 border-bottom'"
+                 style="white-space: pre-wrap;" th:text="${note.note}">
+            </div>
+        </div>
+    </div>
 
-</section>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title mb-3">Risque</h4>
+            <div style="white-space: pre-wrap;" th:text="${risk.level.label}"></div>
+        </div>
+    </div>
 
-<section>
-    <h2>Risque</h2>
-    <div style="white-space: pre-wrap;" th:text="${risk.level.label}"></div>
-</section>
-
+</div>
 
 </body>
 </html>
