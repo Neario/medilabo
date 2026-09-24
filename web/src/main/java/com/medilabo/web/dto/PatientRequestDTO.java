@@ -3,6 +3,7 @@ package com.medilabo.web.dto;
 import com.medilabo.web.dto.enumeration.Gender;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,6 +29,7 @@ public record PatientRequestDTO(
         String lastName,
 
         @NotNull(message = "birthDate must be not empty")
+        @PastOrPresent(message = "birthDate must not be in the future")
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
         LocalDate birthDate,
 

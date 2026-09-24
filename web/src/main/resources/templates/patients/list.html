@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Patients list</title>
@@ -11,7 +11,7 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="mb-0">Patients</h4>
-        <a th:href="@{/patients/create}" class="btn btn-primary">Nouveau patient</a>
+        <a th:href="@{/patients/create}" class="btn btn-primary" sec:authorize="hasRole('ORGANIZER')">Nouveau patient</a>
     </div>
     <table class="table">
         <thead>
@@ -37,7 +37,8 @@
                     <a th:href="@{/patients/{id}(id=${patient.id})}" class="btn btn-sm btn-outline-primary me-1">
                         <i class="bi bi-eye"></i>
                     </a>
-                    <a th:href="@{/patients/{id}/edit(id=${patient.id})}" class="btn btn-sm btn-outline-primary">
+                    <a th:href="@{/patients/{id}/edit(id=${patient.id})}" class="btn btn-sm btn-outline-primary"
+                       sec:authorize="hasRole('ORGANIZER')">
                         <i class="bi bi-pencil"></i>
                     </a>
                 </td>

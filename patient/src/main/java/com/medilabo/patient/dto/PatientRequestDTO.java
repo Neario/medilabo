@@ -27,6 +27,7 @@ public record PatientRequestDTO(
         String lastName,
 
         @NotNull
+        @PastOrPresent(message = "birthDate must not be in the future")
         LocalDate birthDate,
 
         Gender gender,

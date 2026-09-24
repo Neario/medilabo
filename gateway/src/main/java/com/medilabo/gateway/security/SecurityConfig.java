@@ -33,7 +33,7 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.DELETE, "/patients/**").hasRole("ORGANIZER")
                         .pathMatchers(HttpMethod.GET, "/notes/**").hasAnyRole("ORGANIZER", "PRACTITIONER")
                         .pathMatchers(HttpMethod.POST, "/notes/**").hasRole("PRACTITIONER")
-                        .pathMatchers("/risk/**").hasRole("PRACTITIONER")
+                        .pathMatchers("/risk/**").hasAnyRole("ORGANIZER", "PRACTITIONER")
                         .pathMatchers("/auth/**").permitAll()
                         .anyExchange().authenticated()
                 )
